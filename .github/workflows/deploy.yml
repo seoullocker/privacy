@@ -1,0 +1,57 @@
+# GitHub Pages 배포.
+#
+# main 브랜치에 밀어 넣으면 자동으로 빌드해서 사이트를 올린다.
+# 저장소 Settings > Pages > Source 를 "GitHub Actions" 로 한 번만 바꿔 두면 된다.
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  # 저장소 Actions 탭에서 직접 눌러 배포할 수도 있게 한다
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 배포가 겹치면 나중 것만 남긴다. 진행 중인 배포는 끊지 않는다
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: 빌드
+        # 저장소 이름이 주소에 들어가므로 base 경로를 맞춰 준다.
+        # 나중에 도메인을 연결하면 이 값을 '/' 로 바꾼다
+        env:
+          BASE_PATH: /privacy/
+        run: npm run build
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
