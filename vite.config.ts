@@ -4,16 +4,16 @@ import { defineConfig, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
 
 /**
- * GitHub Pages 는 `https://<계정>.github.io/<저장소>/` 아래에 올라가므로
- * 자원 경로 앞에 저장소 이름이 붙어야 한다. 저장소 이름이 `privacy` 라서 기본값이 `/privacy/`.
+ * supplyseoul.com 을 쓰므로 자원 경로 앞에 아무것도 붙지 않는다.
  *
- * 나중에 도메인(예: supplyseoul.com)을 붙이면 이 값을 '/' 로 바꾸면 된다.
+ * 도메인을 떼고 다시 `https://<계정>.github.io/privacy/` 로 돌아가야 한다면
+ * 이 값을 '/privacy/' 로 되돌리고 public/CNAME 을 지운다.
  * 배포 워크플로에서 BASE_PATH 환경변수로 덮어쓸 수도 있다.
  */
-const base = process.env.BASE_PATH ?? '/privacy/'
+const base = process.env.BASE_PATH ?? '/'
 
 /**
- * GitHub Pages 에는 서버 설정이 없어서 `/privacy/privacy` 같은 주소로 바로 들어오면
+ * GitHub Pages 에는 서버 설정이 없어서 `/privacy` 같은 주소로 바로 들어오면
  * 파일을 못 찾고 404 를 낸다. 그런데 없는 주소에는 `404.html` 을 대신 내주므로,
  * 그 자리에 `index.html` 을 그대로 복사해 두면 화면이 떠서 주소를 읽고 알아서 찾아간다.
  *
