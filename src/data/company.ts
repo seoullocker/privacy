@@ -18,5 +18,7 @@ export const COMPANY = {
     appName: 'Seoul Storage',
     packageName: 'scm.minystore.seoulstorage',
     website: 'https://seoulstorage.imweb.me',
+    /** 구글 플레이 스토어 (메인 페이지의 '앱 열기' 버튼이 쓴다) */
+    playStore: 'https://play.google.com/store/apps/details?id=scm.minystore.seoulstorage',
   },
 } as const

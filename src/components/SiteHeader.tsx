@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import type { Policy } from '../data/types'
 import { COMPANY } from '../data/company'
 import type { Theme } from '../hooks/useTheme'
@@ -17,7 +18,7 @@ export function SiteHeader({ policies, selectedId, onSelect, theme, onToggleThem
   return (
     <header className="topbar">
       <div className="topbar__inner">
-        <a className="brand" href="./">
+        <Link className="brand" to="/">
           <span className="brand__mark">
             <LogoMark />
           </span>
@@ -25,7 +26,7 @@ export function SiteHeader({ policies, selectedId, onSelect, theme, onToggleThem
             <span className="brand__name">{COMPANY.name}</span>
             <span className="brand__sub">Supply Seoul</span>
           </span>
-        </a>
+        </Link>
 
         <VersionSelect policies={policies} selectedId={selectedId} onSelect={onSelect} />
 

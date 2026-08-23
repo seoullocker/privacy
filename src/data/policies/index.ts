@@ -16,3 +16,6 @@ export const POLICIES: Policy[] = [POLICY_2026_08_18, POLICY_2023_09_21]
 /** 현재 시행 중인 방침 */
 export const CURRENT_POLICY: Policy =
   POLICIES.find((policy) => policy.status === 'current') ?? POLICIES[0]
+
+/** 효력이 끝난 방침들. 최근 것이 앞에 온다 (메인 페이지의 '이전 방침 보기' 가 쓴다) */
+export const PAST_POLICIES: Policy[] = POLICIES.filter((policy) => policy.status === 'past')

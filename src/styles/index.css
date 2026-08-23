@@ -1073,6 +1073,21 @@ dl.block > *:nth-last-child(-n + 2) {
   margin-left: auto;
 }
 
+/* 메인 페이지처럼 '정책' 칸이 하나 더 붙는 경우 */
+.footer__inner--wide {
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+}
+
+.footer__links {
+  display: grid;
+  gap: 0.55rem;
+  font-size: 0.89rem;
+}
+
+.footer__linkMuted {
+  color: var(--fg-muted);
+}
+
 /* =============================== 인쇄 =================================== */
 
 @media print {
