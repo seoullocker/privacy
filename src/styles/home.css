@@ -1,0 +1,616 @@
+/* ==========================================================================
+   메인 페이지.
+
+   이 화면은 어두운 사진 위에 글을 얹는 구성이라 다크 한 벌로만 만든다.
+   그래서 색 토큰을 `.home` 안에서 다시 선언한다 — 방침 페이지에서 밝은 화면을
+   골라 두었더라도 이 화면만은 어두운 채로 남는다.
+   ========================================================================== */
+
+.home {
+  --bg: #101120;
+  --fg: #e9e9ed;
+  --fg-strong: #ffffff;
+  --fg-muted: rgba(233, 233, 237, 0.62);
+  --fg-faint: rgba(233, 233, 237, 0.42);
+  --fg-soft: rgba(233, 233, 237, 0.78);
+  --border: rgba(233, 233, 237, 0.11);
+  --border-strong: rgba(233, 233, 237, 0.18);
+  --divider: rgba(233, 233, 237, 0.07);
+  --surface-2: rgba(233, 233, 237, 0.035);
+
+  --accent: #9184d9;
+  --accent-soft: #b5abfc;
+  --accent-deep: #6f61c2;
+  --accent-tint: rgba(145, 132, 217, 0.1);
+  --accent-tint-strong: rgba(145, 132, 217, 0.18);
+  --accent-border: rgba(145, 132, 217, 0.32);
+  --accent-grad: linear-gradient(145deg, #9184d9, #6f61c2);
+
+  --warn-tint: rgba(226, 173, 106, 0.1);
+  --warn-border: rgba(226, 173, 106, 0.32);
+
+  background: var(--bg);
+  color: var(--fg);
+  /* 한국어는 단어 중간에서 줄이 끊기면 읽기 나쁘다 */
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  overflow-x: hidden;
+}
+
+/* 섹션 제목 위에 붙는 작은 분류 딱지 */
+.home__eyebrow {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+  margin-bottom: 1rem;
+}
+
+.home__title {
+  margin: 0 0 1.4rem;
+  max-width: 18ch;
+  font-size: clamp(1.7rem, 4vw, 2.5rem);
+  line-height: 1.25;
+  letter-spacing: -0.03em;
+  font-weight: 800;
+  color: var(--fg-strong);
+}
+
+.home__lede {
+  margin: 0 0 1.1rem;
+  max-width: 40ch;
+  font-size: 1rem;
+  line-height: 1.85;
+  color: var(--fg-muted);
+}
+
+.home__lede:last-of-type {
+  margin-bottom: 0;
+}
+
+/* 글과 사진을 나란히 놓는 두 칸짜리 구성 */
+.home__split {
+  max-width: var(--shell);
+  margin: 0 auto;
+  padding: clamp(3.5rem, 8vw, 6rem) 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+
+/* <picture> 는 기본이 inline 이라 칸을 제대로 채우지 못한다 */
+.home__split > picture {
+  display: block;
+  min-width: 0;
+}
+
+.home__figure {
+  width: 100%;
+  height: 100%;
+  max-height: 30rem;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  display: block;
+}
+
+/* ============================== 머리말 =================================== */
+
+.homebar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: saturate(180%) blur(18px);
+  -webkit-backdrop-filter: saturate(180%) blur(18px);
+  background: rgba(16, 17, 32, 0.78);
+  border-bottom: 1px solid var(--divider);
+}
+
+.homebar__inner {
+  max-width: var(--shell);
+  margin: 0 auto;
+  padding: 0.85rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.homebar__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  text-decoration: none;
+  color: inherit;
+  margin-right: auto;
+}
+
+.homebar__mark {
+  width: 34px;
+  height: 34px;
+  flex: none;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  background: var(--accent-grad);
+  box-shadow: 0 6px 18px -8px var(--accent);
+}
+
+.homebar__mark svg {
+  width: 19px;
+  height: 19px;
+  display: block;
+}
+
+.homebar__names {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.homebar__name {
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+  color: var(--fg-strong);
+}
+
+.homebar__sub {
+  font-size: 0.72rem;
+  color: var(--fg-faint);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.homebar__nav {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.homebar__link {
+  padding: 0.45rem 0.7rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--fg-muted);
+  text-decoration: none;
+  transition: color 0.18s var(--ease), background-color 0.18s var(--ease);
+}
+
+.homebar__link:hover,
+.homebar__link:focus-visible {
+  color: var(--fg-strong);
+  background: var(--accent-tint);
+}
+
+/* 좁은 화면에서는 메뉴가 로고 아래로 내려가면서 줄이 늘어난다 */
+@media (max-width: 34rem) {
+  .homebar__nav {
+    order: 3;
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+/* =============================== 버튼 ==================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.5rem;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: filter 0.18s var(--ease), background-color 0.18s var(--ease),
+    border-color 0.18s var(--ease), color 0.18s var(--ease);
+}
+
+.btn--primary {
+  background: var(--accent-grad);
+  color: #fff;
+  box-shadow: 0 14px 34px -16px var(--accent);
+}
+
+.btn--primary:hover,
+.btn--primary:focus-visible {
+  filter: brightness(1.08);
+}
+
+.btn--ghost {
+  border: 1px solid var(--border-strong);
+  background: rgba(16, 17, 32, 0.45);
+  backdrop-filter: blur(8px);
+  color: var(--fg);
+}
+
+.btn--ghost:hover,
+.btn--ghost:focus-visible {
+  border-color: var(--accent-border);
+  background: rgba(145, 132, 217, 0.14);
+  color: var(--fg-strong);
+}
+
+.btn--tinted {
+  padding: 0.75rem 1.25rem;
+  border: 1px solid var(--accent-border);
+  background: var(--accent-tint);
+  color: var(--accent-soft);
+  font-size: 0.9rem;
+}
+
+.btn--tinted:hover,
+.btn--tinted:focus-visible {
+  background: var(--accent-tint-strong);
+  color: var(--fg-strong);
+}
+
+/* 머리말 오른쪽 끝의 작은 버튼 */
+.btn--compact {
+  padding: 0.55rem 1rem;
+  border-radius: 10px;
+  font-size: 0.86rem;
+  background: var(--accent-grad);
+  color: #fff;
+  box-shadow: 0 8px 22px -12px var(--accent);
+  white-space: nowrap;
+}
+
+.btn--compact:hover,
+.btn--compact:focus-visible {
+  filter: brightness(1.08);
+}
+
+/* =============================== 히어로 ================================== */
+
+.hero2 {
+  position: relative;
+  min-height: clamp(34rem, 86vh, 54rem);
+  display: flex;
+  /* 배경 사진과 장막이 뒤 계층으로 빠져도 다음 섹션을 덮지 않게 한다 */
+  isolation: isolate;
+}
+
+.hero2__photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* 인물이 오른쪽에 있어 글과 겹치지 않게 초점을 오른쪽으로 민다 */
+  object-position: 70% center;
+  z-index: -2;
+}
+
+/*
+ * 사진 위에 덮는 장막. 왼쪽은 글을 읽을 만큼 어둡게, 오른쪽은 사진이 보이게 두고
+ * 아래쪽은 다음 섹션 배경색으로 자연스럽게 이어 준다.
+ * (디자인 원안의 overlayStrength 66% 를 계산해 둔 값)
+ */
+.hero2__veil {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(16, 17, 32, 0.62) 0%,
+      rgba(16, 17, 32, 0.541) 34%,
+      rgba(16, 17, 32, 0.165) 62%,
+      rgba(16, 17, 32, 0) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(16, 17, 32, 0.363) 0%,
+      rgba(16, 17, 32, 0) 30%,
+      rgba(16, 17, 32, 0) 60%,
+      #101120 100%
+    );
+}
+
+/*
+ * 좁은 화면에서는 글이 사진 폭을 거의 다 덮어서, 왼쪽만 어둡게 하는 가로 장막으로는
+ * 오른쪽 글자가 사진 위에 그대로 얹힌다. 그래서 위에서 아래로 덮는 방식으로 바꾼다.
+ * (인물은 사진 가운데쯤에 있어 위쪽을 진하게 눌러도 가려지지 않는다)
+ */
+@media (max-width: 44rem) {
+  .hero2__veil {
+    background: linear-gradient(
+      180deg,
+      rgba(16, 17, 32, 0.92) 0%,
+      rgba(16, 17, 32, 0.86) 30%,
+      rgba(16, 17, 32, 0.55) 52%,
+      rgba(16, 17, 32, 0.2) 68%,
+      #101120 100%
+    );
+  }
+}
+
+.hero2__inner {
+  position: relative;
+  width: 100%;
+  max-width: var(--shell);
+  margin: 0 auto;
+  padding: clamp(3.5rem, 10vh, 7rem) 1.5rem clamp(3rem, 8vh, 5rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.hero2__badge {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid var(--accent-border);
+  background: rgba(145, 132, 217, 0.12);
+  backdrop-filter: blur(8px);
+  color: var(--accent-soft);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.hero2__badgeDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.hero2__title {
+  margin: 1.2rem 0 0;
+  max-width: 22ch;
+  font-size: clamp(2.2rem, 6.2vw, 4rem);
+  line-height: 1.14;
+  letter-spacing: -0.04em;
+  font-weight: 800;
+  color: var(--fg-strong);
+  text-shadow: 0 2px 30px rgba(16, 17, 32, 0.6);
+}
+
+.hero2__lede {
+  margin: 1.4rem 0 0;
+  max-width: 32ch;
+  font-size: clamp(1rem, 2.2vw, 1.15rem);
+  line-height: 1.8;
+  color: var(--fg-soft);
+  text-shadow: 0 1px 20px rgba(16, 17, 32, 0.7);
+}
+
+.hero2__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 2rem;
+}
+
+/* ============================= 이용 방법 ================================= */
+
+.steps {
+  max-width: var(--shell);
+  margin: 0 auto;
+  padding: clamp(4rem, 10vw, 7rem) 1.5rem;
+}
+
+.steps__title {
+  margin: 0 0 3rem;
+  max-width: 20ch;
+  font-size: clamp(1.7rem, 4vw, 2.5rem);
+  line-height: 1.25;
+  letter-spacing: -0.03em;
+  font-weight: 800;
+  color: var(--fg-strong);
+}
+
+.steps__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1.25rem;
+}
+
+.step {
+  padding: 1.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-2);
+}
+
+.step__no {
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  background: rgba(145, 132, 217, 0.14);
+  border: 1px solid var(--accent-border);
+  color: var(--accent-soft);
+  font-weight: 800;
+  font-size: 0.95rem;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 1.2rem;
+}
+
+.step__title {
+  margin: 0 0 0.6rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--fg-strong);
+}
+
+.step__desc {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--fg-muted);
+}
+
+/* =========================== 맡길 수 있는 짐 ============================= */
+
+.luggage {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.luggage li {
+  display: flex;
+  gap: 0.7rem;
+  align-items: flex-start;
+  font-size: 0.97rem;
+  line-height: 1.7;
+  color: var(--fg-soft);
+}
+
+.luggage li::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex: none;
+  margin-top: 0.6rem;
+}
+
+.luggage__note {
+  margin: 1.6rem 0 0;
+  padding: 0.9rem 1.1rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--warn-border);
+  background: var(--warn-tint);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--fg-soft);
+}
+
+/* ========================= 개인정보처리방침 안내 ========================= */
+
+.privacyBand {
+  border-top: 1px solid var(--divider);
+  background: var(--surface-2);
+}
+
+.privacyBand__inner {
+  max-width: var(--shell);
+  margin: 0 auto;
+  padding: clamp(3.5rem, 8vw, 5.5rem) 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: clamp(2rem, 5vw, 3.5rem);
+  align-items: center;
+}
+
+.privacyBand__title {
+  margin: 0 0 1.1rem;
+  max-width: 20ch;
+  font-size: clamp(1.5rem, 3.4vw, 2.1rem);
+  line-height: 1.3;
+  letter-spacing: -0.03em;
+  font-weight: 800;
+  color: var(--fg-strong);
+}
+
+.privacyBand__lede {
+  margin: 0;
+  max-width: 44ch;
+  font-size: 1rem;
+  line-height: 1.85;
+  color: var(--fg-muted);
+}
+
+.privacyBand__cards {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.pcard {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.15rem 1.35rem;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  text-decoration: none;
+  color: inherit;
+  transition: background-color 0.18s var(--ease), border-color 0.18s var(--ease);
+}
+
+.pcard:hover,
+.pcard:focus-visible {
+  border-color: var(--border-strong);
+  background: rgba(233, 233, 237, 0.06);
+}
+
+.pcard--primary {
+  border-color: var(--accent-border);
+  background: var(--accent-tint);
+}
+
+.pcard--primary:hover,
+.pcard--primary:focus-visible {
+  background: var(--accent-tint-strong);
+  border-color: rgba(145, 132, 217, 0.5);
+}
+
+.pcard__mark {
+  width: 2.4rem;
+  height: 2.4rem;
+  flex: none;
+  border-radius: 11px;
+  display: grid;
+  place-items: center;
+  background: var(--accent-grad);
+}
+
+.pcard__mark svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+.pcard__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.pcard__title {
+  font-weight: 700;
+  color: var(--fg-strong);
+  font-size: 0.98rem;
+}
+
+.pcard--plain .pcard__title {
+  color: var(--fg);
+}
+
+.pcard__meta {
+  font-size: 0.83rem;
+  color: var(--fg-muted);
+}
+
+.pcard--plain .pcard__meta {
+  color: var(--fg-faint);
+}
+
+.pcard__arrow {
+  margin-left: auto;
+  color: var(--accent-soft);
+  font-size: 1.1rem;
+}
+
+.pcard--plain .pcard__arrow {
+  color: var(--fg-faint);
+}
