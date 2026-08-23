@@ -3,7 +3,7 @@
 짐 보관 서비스 **Seoul Storage**(`scm.minystore.seoulstorage`)의 홈페이지와
 개인정보처리방침을 함께 담고 있는 사이트입니다.
 
-> 공개 주소: <https://seoullocker.github.io/privacy/>
+> 공개 주소: <https://supplyseoul.com>
 
 ---
 
@@ -21,14 +21,14 @@
 ### ⚠️ Google Play Console 주소를 바꿔야 합니다
 
 전에는 사이트 첫 주소가 곧 방침이었지만, 이제 그 자리에 메인이 옵니다.
-**Play Console 의 "개인정보처리방침 URL" 을 아래로 바꿔 주세요.**
+**도메인이 연결된 뒤 Play Console 의 "개인정보처리방침 URL" 을 아래로 바꿔 주세요.**
 
 ```
-바뀐 주소   https://seoullocker.github.io/privacy/privacy
+https://supplyseoul.com/privacy
 ```
 
-예전에 공유한 `?v=` 링크(`.../privacy/?v=2023-09-21`)는 자동으로 방침 화면으로
-넘어가므로 그대로 두어도 됩니다.
+예전에 공유한 `?v=` 링크(`.../privacy/?v=2023-09-21`)는 GitHub 이 새 도메인으로
+넘겨 주고, 그 뒤 화면이 방침으로 다시 넘겨 주므로 그대로 두어도 됩니다.
 
 ---
 
@@ -36,7 +36,7 @@
 
 ```bash
 npm install
-npm run dev      # http://localhost:5173/privacy/
+npm run dev      # http://localhost:5173/
 npm run build    # 타입 검사 + 정적 파일 생성 (dist/)
 npm run preview  # 빌드 결과 확인
 ```
@@ -51,7 +51,7 @@ npm run preview  # 빌드 결과 확인
 1. 저장소 → **Settings** → 왼쪽 메뉴 **Pages**
 2. **Build and deployment** → **Source** 를 `GitHub Actions` 로 변경
 
-GitHub Pages 에는 서버 설정이 없어서 `/privacy/privacy` 같은 주소로 바로 들어오면
+GitHub Pages 에는 서버 설정이 없어서 `/privacy` 같은 주소로 바로 들어오면
 파일을 못 찾습니다. 그래서 빌드할 때 `index.html` 을 `404.html` 로도 복사해 둡니다
 (`vite.config.ts` 의 `spaFallback`). 없는 주소에는 GitHub 이 `404.html` 을 내주므로
 화면이 떠서 주소를 읽고 알아서 찾아갑니다.
@@ -86,14 +86,27 @@ node scripts/build-images.mjs <압축 파일을 푼 자리의 uploads 폴더>
 인물이 화면 밖으로 밀려나기 때문입니다. 사진이라 WebP 를 먼저 쓰고 못 읽는
 브라우저에는 JPEG 를 내줍니다.
 
-## 도메인을 연결할 때
+## 도메인
 
-1. `public/` 에 `CNAME` 파일을 만들고 도메인만 한 줄 적습니다.
-2. `.github/workflows/deploy.yml` 의 `BASE_PATH` 를 `/` 로 바꿉니다.
-3. 저장소 → Settings → Pages → Custom domain 에 도메인을 넣습니다.
+`supplyseoul.com` 을 씁니다. 이 저장소에서 도메인과 얽힌 곳은 두 군데뿐입니다.
 
-그러면 메인이 `도메인/`, 방침이 `도메인/privacy` 로 정리됩니다.
-Play Console 주소도 그때 다시 바꿔 주세요.
+| 파일 | 하는 일 |
+| --- | --- |
+| `public/CNAME` | 어떤 도메인으로 서비스할지 GitHub 에 알린다 |
+| `.github/workflows/deploy.yml` 의 `BASE_PATH` | 자원 경로 앞에 무엇을 붙일지 정한다 (`/`) |
+
+도메인 쪽(가비아)에는 아래 레코드가 등록되어 있어야 합니다.
+
+```
+A      @      185.199.108.153
+A      @      185.199.109.153
+A      @      185.199.110.153
+A      @      185.199.111.153
+CNAME  www    seoullocker.github.io.
+```
+
+도메인을 떼고 `https://seoullocker.github.io/privacy/` 로 되돌리려면
+`public/CNAME` 을 지우고 `BASE_PATH` 를 `/privacy/` 로 바꿉니다.
 
 ## 파일 구조
 

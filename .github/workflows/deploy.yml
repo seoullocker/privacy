@@ -34,10 +34,10 @@ jobs:
       - run: npm ci
 
       - name: 빌드
-        # 저장소 이름이 주소에 들어가므로 base 경로를 맞춰 준다.
-        # 나중에 도메인을 연결하면 이 값을 '/' 로 바꾼다
+        # supplyseoul.com 을 붙였으므로 주소에 저장소 이름이 들어가지 않는다.
+        # (public/CNAME 이 그 도메인을 GitHub 에 알려 준다)
         env:
-          BASE_PATH: /privacy/
+          BASE_PATH: /
         run: npm run build
 
       - uses: actions/configure-pages@v5
