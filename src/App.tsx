@@ -8,6 +8,7 @@ import {
   useSearchParams,
 } from 'react-router-dom'
 import HomePage from './pages/HomePage'
+import PartnersPage from './pages/PartnersPage'
 import PolicyPage from './pages/PolicyPage'
 
 /**
@@ -46,6 +47,7 @@ export default function App() {
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Landing />} />
+        <Route path="/partners" element={<PartnersPage />} />
         <Route path="/privacy" element={<PolicyPage />} />
         {/* 없는 주소로 들어오면 메인으로 보낸다 */}
         <Route path="*" element={<Navigate to="/" replace />} />

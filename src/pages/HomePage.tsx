@@ -6,6 +6,7 @@ import { CURRENT_POLICY, PAST_POLICIES } from '../data/policies'
 import { LogoMark } from '../components/Icons'
 import { Photo } from '../components/Photo'
 import { SiteFooter } from '../components/SiteFooter'
+import { useDarkOnly } from '../hooks/useDarkOnly'
 
 import subwayWide from '../assets/hero/subway-wide.webp'
 import subwayWideJpg from '../assets/hero/subway-wide.jpg'
@@ -44,18 +45,7 @@ export default function HomePage() {
     document.title = `${COMPANY.services.appName} · 서울 짐보관 | ${COMPANY.name}`
   }, [])
 
-  /*
-   * 이 화면은 어두운 사진 위에 글을 얹는 구성이라 다크 한 벌로만 만들었다.
-   * 방침 화면에서 밝은 화면을 골라 두었더라도 여기서는 어두운 채로 보여 주고,
-   * 화면을 떠날 때 고른 값을 되돌려 놓는다.
-   */
-  useEffect(() => {
-    const previous = document.documentElement.dataset.theme
-    document.documentElement.dataset.theme = 'dark'
-    return () => {
-      if (previous) document.documentElement.dataset.theme = previous
-    }
-  }, [])
+  useDarkOnly()
 
   return (
     <div className="home">
@@ -175,15 +165,10 @@ export default function HomePage() {
               사람이 직접 받고 직접 내주기 때문에, 캐리어가 커서 사물함에 들어가지 않아도 문제되지
               않습니다.
             </p>
-            <a
-              className="btn btn--tinted"
-              style={{ marginTop: '1.8rem' }}
-              href={COMPANY.services.website}
-              target="_blank"
-              rel="noreferrer noopener"
-            >
+            {/* 예전에는 외부 홈페이지로 보냈지만, 이제 사이트 안의 제휴 안내로 간다 */}
+            <Link className="btn btn--tinted" style={{ marginTop: '1.8rem' }} to="/partners">
               제휴 상점으로 참여하기
-            </a>
+            </Link>
           </div>
 
           <Photo
