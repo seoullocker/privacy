@@ -614,3 +614,41 @@
 .pcard--plain .pcard__arrow {
   color: var(--fg-faint);
 }
+
+/* =============================== 제휴 안내 ================================
+   메인과 같은 색 토큰(`.home`)을 그대로 쓰고, 이 화면에만 필요한 것만 더한다.
+   ========================================================================== */
+
+/*
+ * 사진이 들어오기 전까지 히어로 배경을 대신하는 무늬.
+ * 브랜드 보라를 왼쪽 위와 오른쪽 아래에서 옅게 비추고, 아래는 다음 섹션
+ * 배경색으로 이어 준다 — 사진이 붙어도 같은 인상이 남게 하려는 것이다.
+ * 사진을 얹으면 <Photo> 와 `.hero2__veil` 이 이 무늬를 덮는다.
+ */
+.partners__hero {
+  min-height: clamp(28rem, 68vh, 42rem);
+  background:
+    radial-gradient(120% 90% at 12% 0%, rgba(145, 132, 217, 0.22) 0%, rgba(16, 17, 32, 0) 62%),
+    radial-gradient(90% 80% at 88% 100%, rgba(111, 97, 194, 0.18) 0%, rgba(16, 17, 32, 0) 58%),
+    linear-gradient(180deg, #14152a 0%, #101120 100%);
+  border-bottom: 1px solid var(--divider);
+}
+
+/* 문의처 안내. 버튼 아래에 붙어 한 마디 더 거드는 정도의 크기로 둔다 */
+.partners__hint {
+  margin: 1.6rem 0 0;
+  max-width: 34ch;
+  font-size: 0.92rem;
+  line-height: 1.75;
+  color: var(--fg-faint);
+}
+
+.partners__plan {
+  max-width: var(--shell);
+  margin: 0 auto;
+  padding: clamp(3.5rem, 9vw, 6rem) 1.5rem;
+}
+
+.partners__back {
+  margin: 2.5rem 0 0;
+}
