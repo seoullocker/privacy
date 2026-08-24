@@ -637,22 +637,6 @@
 }
 
 /*
- * 버튼 바로 위에서 한 마디 거드는 안내.
- *
- * 사진 위에 얹히는 글이라 본문(`.hero2__lede`)과 같은 그림자를 깐다. 그림자가
- * 없으면 젖은 바닥이 밝게 번진 자리에서 글자가 사라진다. 색도 `--fg-faint`
- * 로는 사진을 이기지 못해 한 단 올렸다.
- */
-.partners__hint {
-  margin: 1.5rem 0 0;
-  max-width: 34ch;
-  font-size: 0.92rem;
-  line-height: 1.75;
-  color: var(--fg-muted);
-  text-shadow: 0 1px 20px rgba(16, 17, 32, 0.7);
-}
-
-/*
  * 초점을 메인(70%)보다 조금 더 오른쪽으로 민다.
  *
  * 화면이 16:9 보다 세로로 길어지는 구간(대략 44~68rem)에서는 사진 좌우가
@@ -662,32 +646,6 @@
  */
 .partners__hero .hero2__photo {
   object-position: 80% center;
-}
-
-/*
- * 좁은 화면 전용 장막.
- *
- * 이 히어로는 메인보다 글이 한 덩이 더 많다(문의 안내). 그래서 메인의 장막
- * 곡선을 그대로 쓰면 마지막 문단이 사진에서 가장 밝은 자리 — 젖은 바닥에
- * 번진 상점 불빛 — 위에 얹혀 읽히지 않는다. 글이 끝나는 데까지 어둡게
- * 붙들고, 버튼 아래로 남겨 둔 띠에서만 사진을 드러낸다.
- * 그 띠를 만들려고 높이도 함께 올렸다.
- */
-@media (max-width: 44rem) {
-  .partners__hero {
-    min-height: clamp(34rem, 82vh, 46rem);
-  }
-
-  .partners__hero .hero2__veil {
-    background: linear-gradient(
-      180deg,
-      rgba(16, 17, 32, 0.93) 0%,
-      rgba(16, 17, 32, 0.9) 48%,
-      rgba(16, 17, 32, 0.86) 68%,
-      rgba(16, 17, 32, 0.3) 84%,
-      #101120 100%
-    );
-  }
 }
 
 .partners__plan {

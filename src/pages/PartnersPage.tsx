@@ -108,23 +108,6 @@ export default function PartnersPage() {
               골목 상점이 보관소가 되는 절차와 정산 조건을 한 화면에 정리하는 중입니다. 오래
               걸리지 않게 하겠습니다.
             </p>
-
-            <p className="partners__hint">
-              먼저 이야기 나누고 싶다면 지금 연락해 주세요. 상점 자리와 짐을 둘 수 있는 공간만
-              알려 주시면 안내드립니다.
-            </p>
-
-            <div className="hero2__actions">
-              <a className="btn btn--primary" href={`tel:${COMPANY.phone.replace(/-/g, '')}`}>
-                전화로 문의하기
-              </a>
-              <a
-                className="btn btn--ghost"
-                href={`mailto:${COMPANY.email}?subject=${encodeURIComponent('제휴 상점 문의')}`}
-              >
-                이메일 보내기
-              </a>
-            </div>
           </div>
         </section>
 
