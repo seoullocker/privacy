@@ -2,8 +2,26 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { COMPANY } from '../data/company'
 import { LogoMark } from '../components/Icons'
+import { Photo } from '../components/Photo'
 import { SiteFooter } from '../components/SiteFooter'
 import { useDarkOnly } from '../hooks/useDarkOnly'
+
+import partnersWide from '../assets/hero/partners-wide.webp'
+import partnersWideJpg from '../assets/hero/partners-wide.jpg'
+import partnersTall from '../assets/hero/partners-tall.webp'
+import partnersTallJpg from '../assets/hero/partners-tall.jpg'
+
+/*
+ * 히어로 사진. 크기는 scripts/build-images.mjs 가 내놓은 실제 픽셀 값이다.
+ *
+ * WebP 를 먼저 내주고 못 읽는 브라우저에는 JPEG 를 내주는 일은 <Photo> 가 한다.
+ * 가로용·세로용을 따로 두는 까닭도 같다 — 세로로 긴 휴대폰에서 같은 사진을
+ * 잘라 쓰면 캐리어와 명패가 화면 밖으로 밀려난다.
+ */
+const PARTNERS = {
+  wide: { webp: partnersWide, jpg: partnersWideJpg, w: 1536, h: 864 },
+  tall: { webp: partnersTall, jpg: partnersTallJpg, w: 768, h: 1366 },
+}
 
 /** 제휴 안내에서 곧 채울 칸. 준비 중이라는 말만으로는 무엇을 기다리는지 알 수 없다 */
 const COMING = [
@@ -65,14 +83,15 @@ export default function PartnersPage() {
       </header>
 
       <main id="partners-main">
-        {/*
-         * 사진이 들어올 자리.
-         * 아직 사진이 없어 CSS 로 배경을 그려 두었다(`.partners__hero`).
-         * 사진이 준비되면 여기에 메인과 같은 <Photo> 를 얹으면 된다 —
-         *   <Photo {...PARTNERS} className="hero2__photo" eager alt="..." />
-         *   <div className="hero2__veil" aria-hidden />
-         */}
         <section className="hero2 partners__hero">
+          <Photo
+            {...PARTNERS}
+            className="hero2__photo"
+            eager
+            alt="비 온 뒤 밤 골목, 불이 꺼진 무인 보관함 옆에 대형 하드캐리어가 서 있고 상점 유리문에 'coming soon' 이라 쓴 나무 명패가 걸려 있다"
+          />
+          <div className="hero2__veil" aria-hidden />
+
           <div className="hero2__inner">
             <span className="hero2__badge">
               <span className="hero2__badgeDot" />
@@ -90,6 +109,11 @@ export default function PartnersPage() {
               걸리지 않게 하겠습니다.
             </p>
 
+            <p className="partners__hint">
+              먼저 이야기 나누고 싶다면 지금 연락해 주세요. 상점 자리와 짐을 둘 수 있는 공간만
+              알려 주시면 안내드립니다.
+            </p>
+
             <div className="hero2__actions">
               <a className="btn btn--primary" href={`tel:${COMPANY.phone.replace(/-/g, '')}`}>
                 전화로 문의하기
@@ -101,11 +125,6 @@ export default function PartnersPage() {
                 이메일 보내기
               </a>
             </div>
-
-            <p className="partners__hint">
-              먼저 이야기 나누고 싶다면 지금 연락해 주세요. 상점 자리와 짐을 둘 수 있는 공간만
-              알려 주시면 안내드립니다.
-            </p>
           </div>
         </section>
 
